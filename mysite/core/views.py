@@ -49,7 +49,6 @@ def is_employer(request):
         form = CreateProfileForm(request.POST)
         if form.is_valid():
             data = form.cleaned_data['employer']
-            print(data)
             user = request.user
             if(data == True):
                 user.profile.employer = True
