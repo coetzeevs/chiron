@@ -40,7 +40,7 @@ class ResultsView(generic.DetailView):
 
 
 def email(request):
-	email = EmailMessage('hello', 'Hello Lohan, Hierdie kom vanaf Django. Whoop Whoop',settings.EMAIL_HOST_USER,  to=['leroux.ljf@gmail.com'])
+	email = EmailMessage('hello', 'Hello Johan, Minder OLX en meer ChiChi',settings.EMAIL_HOST_USER,  to=['johan.duplessis@olx.com'])
 	email.send()
 	return HttpResponse("Hello, world. You're at the polls index.")
 
