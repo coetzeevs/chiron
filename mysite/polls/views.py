@@ -5,6 +5,9 @@ from .models import Question, Choice
 from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
+from django.core.mail import EmailMessage
+from django.conf import settings
+
 
 class IndexView(generic.ListView):
 	template_name = 'polls/index.html'
@@ -34,6 +37,12 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
 	model = Question
 	template_name = 'polls/results.html'
+
+
+def email(request):
+	email = EmailMessage('hello', 'Hello Lohan, Hierdie kom vanaf Django. Whoop Whoop',settings.EMAIL_HOST_USER,  to=['leroux.ljf@gmail.com'])
+	email.send()
+	return HttpResponse("Hello, world. You're at the polls index.")
 
 def vote(request, question_id):
 	question = get_object_or_404(Question, pk=question_id)

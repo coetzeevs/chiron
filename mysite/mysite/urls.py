@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
     url(r'^polls/', include('polls.urls')),
     url(r'^admin/', admin.site.urls),
-     url(r'^$', core_views.home, name='home'),
+    url(r'^$', core_views.home, name='home'),
 ]
