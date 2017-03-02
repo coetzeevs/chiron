@@ -4,5 +4,5 @@ from . import views
 
 app_name = 'createprofile'
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^employee/$', views.index, name='index'),
 ]
