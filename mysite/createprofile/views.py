@@ -57,7 +57,27 @@ def emplyer_edit_profile(request):
             form = CreateProfileFromER(initial = request.POST, instance=u) #No request.POST
         except ObjectDoesNotExist:
             form = CreateProfileFromER(request.FILES)
-    return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
+    return render(request, 'createprofile/emplyer_edit_profile.html', {'form': form})
+
+def emplyee_edit_profile(request):
+    if request.method== 'POST':
+        try:
+            u = Employee_Profile.objects.get(user=request.user)
+            form = CreateProfileFromEE(request.POST, instance=u)
+        except ObjectDoesNotExist:
+            form = CreateProfileFromEE(request.POST, request.FILES)
+        if form.is_valid():  #is_valid is function not property
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return HttpResponse("Made it")
+    else:
+        try:
+            u = Employee_Profile.objects.get(user=request.user)
+            form = CreateProfileFromEE(initial = request.POST, instance=u) #No request.POST
+        except ObjectDoesNotExist:
+            form = CreateProfileFromEE(request.FILES)
+    return render(request, 'createprofile/employee_edit_profile.html', {'form': form})
 
 
 
