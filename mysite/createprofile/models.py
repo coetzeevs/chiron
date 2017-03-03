@@ -21,3 +21,10 @@ class Employee_Profile(models.Model):
     julia  = models.BooleanField(default = False)
     tableau = models.BooleanField(default = False)
     
+class Employer_Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    company = models.TextField(max_length=30, blank=True)
+    industry = models.TextField(max_length=30, blank=True)
+    bio =  models.TextField(max_length=500, blank=True)
+    url =  models.TextField(max_length=50, blank=True)
+    
