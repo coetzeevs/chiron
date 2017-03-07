@@ -1,0 +1,16 @@
+  <header>
+    <h1>Employee Home Page</h1>
+    {% if user.is_authenticated %}
+      Hi {{ user.username }}!
+      <a href="{% url 'logout' %}">logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">login</a>
+    {% endif %}
+  </header>
+<p> You are now on the employee home page</p>
+<p>How about starting to create your profile?</p>
+ <a href="{% url 'createprofile:employee_view_profile' %}">view profile</a>
+ <p>Already Done?</p>
+ <p>How about editing your profile?</p>
+ <a href="{% url 'createprofile:emplyee_edit_profile' %}">edit profile</a>
+

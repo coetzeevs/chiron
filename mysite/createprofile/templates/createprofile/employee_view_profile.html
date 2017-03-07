@@ -1,0 +1,8 @@
+<p>Hi you are now viewing your profile 2</p>
+	    <ul>
+    {% for field in u.fields %}
+		<p><b>{{ field.label }}:</b> {{ field.data }}</p>
+    {% endfor %}
+    </ul>
+		<p>{{ u.user}}</p>
+		<p>{{ u.current_company}}</p>

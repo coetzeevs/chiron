@@ -79,6 +79,15 @@ def emplyee_edit_profile(request):
             form = CreateProfileFromEE(request.FILES)
     return render(request, 'createprofile/employee_edit_profile.html', {'form': form})
 
+def employee_home(request):
+    return render(request, 'createprofile/employee_home.html')
+
+def employee_view_profile(request):
+    u = Employee_Profile.objects.get(user=request.user)
+    print(u.user)
+    print(u.current_company)
+    return render(request, 'createprofile/employee_view_profile.html', {'u':u})
+
 
 
 
