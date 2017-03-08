@@ -1,8 +1,12 @@
-<p>Hi you are now viewing your profile 2</p>
-	    <ul>
-    {% for field in u.fields %}
-		<p><b>{{ field.label }}:</b> {{ field.data }}</p>
-    {% endfor %}
-    </ul>
-		<p>{{ u.user}}</p>
-		<p>{{ u.current_company}}</p>
+<p>Hi {{u.user}} you are now viewing your profile </p>
+<p>Want to go back to your home page?</p>
+<a href="{% url 'createprofile:employee_home' %}">Take me home</a>
+
+<table style="width:100%">
+{% for name, value in u_stats.get_fields %}
+	<tr>
+    	<td>{{ name }}</td>
+    	<td>{{ value }}</td>
+    </tr>
+{% endfor %}
+</table>

@@ -1,5 +1,7 @@
 
 <h2>Welcome, {{ user.username }}!</h2>
+<p>Want to go back to your home page?</p>
+<a href="{% url 'createprofile:employee_home' %}">Take me home</a>
 {% block content %}
   <h2>Come and Edit your profile</h2>
   <form method="post">

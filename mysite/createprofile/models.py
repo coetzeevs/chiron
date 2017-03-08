@@ -20,6 +20,9 @@ class Employee_Profile(models.Model):
     scala = models.BooleanField(default = False)
     julia  = models.BooleanField(default = False)
     tableau = models.BooleanField(default = False)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Employee_Profile._meta.fields]
     
 class Employer_Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -27,4 +30,14 @@ class Employer_Profile(models.Model):
     industry = models.TextField(max_length=30, blank=True)
     bio =  models.TextField(max_length=500, blank=True)
     url =  models.TextField(max_length=50, blank=True)
+
+class Document(models.Model):
+    description = models.CharField(max_length=255, blank=True)
+    document = models.FileField(upload_to='documents/')
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+    
+
+
+
     

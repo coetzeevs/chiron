@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.conf import settings
 
 from . import views
 
@@ -10,4 +12,8 @@ urlpatterns = [
     url(r'^employee/edit/$', views.emplyee_edit_profile, name='emplyee_edit_profile'),
     url(r'^employee/home/$', views.employee_home, name='employee_home'),
     url(r'^employee/view_profile/$', views.employee_view_profile, name='employee_view_profile'),
+    url(r'^employee/uploadcv/$', views.model_form_upload, name='model_form_upload'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

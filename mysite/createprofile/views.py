@@ -6,8 +6,9 @@ from django.views import generic
 from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
-from createprofile.forms import CreateProfileFromEE, CreateProfileFromER
+from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm
 from .models import Employee_Profile, Employer_Profile 
+from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
 
@@ -86,7 +87,22 @@ def employee_view_profile(request):
     u = Employee_Profile.objects.get(user=request.user)
     print(u.user)
     print(u.current_company)
-    return render(request, 'createprofile/employee_view_profile.html', {'u':u})
+    u_stats = Employee_Profile.objects.get(user=request.user)
+    return render(request, 'createprofile/employee_view_profile.html', {'u': u ,'u_stats': u_stats})
+
+def model_form_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+    else:
+        form = DocumentForm()
+    return render(request, 'createprofile/model_form_upload.html', {
+        'form': form
+    })
+
+
 
 
 
