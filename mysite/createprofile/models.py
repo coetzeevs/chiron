@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from .validators import validate_cv_extension
+from .validators import validate_cv_extension, validate_photo_extension
 
 
 class Employee_Profile(models.Model):
@@ -37,8 +37,14 @@ class Document(models.Model):
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to="documents/", validators=[validate_cv_extension])
     uploaded_at = models.DateTimeField(auto_now_add=True)
-
     
+
+class Profile_Picture(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to="documents/photos/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
 
 
 

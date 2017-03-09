@@ -13,7 +13,8 @@ urlpatterns = [
     url(r'^employee/home/$', views.employee_home, name='employee_home'),
     url(r'^employee/view_profile/$', views.employee_view_profile, name='employee_view_profile'),
     url(r'^employee/uploadcv/$', views.model_form_upload, name='model_form_upload'),
-]
+    url(r'^employee/uploadpp/$', views.photo_form_upload, name='photo_form_upload'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -6,8 +6,8 @@ from django.views import generic
 from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
-from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm
-from .models import Employee_Profile, Employer_Profile , Document
+from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm
+from .models import Employee_Profile, Employer_Profile , Document, Profile_Picture
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
@@ -89,8 +89,9 @@ def employee_view_profile(request):
     print(u.current_company)
     u_stats = Employee_Profile.objects.get(user=request.user)
     doc_stats = Document.objects.get(user=request.user)
-    print(doc_stats.document)
-    return render(request, 'createprofile/employee_view_profile.html', {'u': u ,'u_stats': u_stats, 'doc_stats' : doc_stats})
+    image = Profile_Picture.objects.get(user=request.user)
+    print(image.photo.url)
+    return render(request, 'createprofile/employee_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
 
 def model_form_upload(request):
     if request.method == 'POST':
@@ -105,7 +106,18 @@ def model_form_upload(request):
         print("fuck you")
     return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
-
+def photo_form_upload(request):
+    if request.method == 'POST':
+        form = ProfilePictureForm(request.POST, request.FILES)
+        if form.is_valid():
+            name = form.save(commit=False)
+            name.user = request.user
+            name.save()
+            return HttpResponse("Made it")
+    else:
+        form = ProfilePictureForm()
+        print("fuck you")
+    return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
 
 

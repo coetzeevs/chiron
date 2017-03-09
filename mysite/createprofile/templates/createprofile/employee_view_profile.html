@@ -2,6 +2,14 @@
 <p>Want to go back to your home page?</p>
 <a href="{% url 'createprofile:employee_home' %}">Take me home</a>
 
+	
+
+
+<div>
+<img src="{{ image.photo.url }}" alt = "poes" width = "300" height="200">
+</div>
+
+
 <table style="width:100%">
 {% for name, value in u_stats.get_fields %}
 	<tr>

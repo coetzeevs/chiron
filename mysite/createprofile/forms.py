@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from createprofile.models import Employee_Profile,Employer_Profile, Document
+from createprofile.models import Employee_Profile,Employer_Profile, Document, Profile_Picture
 
 
 class CreateProfileFromEE(forms.ModelForm):
@@ -40,5 +40,8 @@ class DocumentForm(forms.ModelForm):
         fields = ('description', 'document', )
 
 
-
+class ProfilePictureForm(forms.ModelForm):
+    class Meta:
+        model = Profile_Picture
+        fields = ('description', 'photo', )
 	
