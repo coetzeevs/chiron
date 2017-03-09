@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from createprofile.models import Employee_Profile,Employer_Profile, Document, Profile_Picture
+from createprofile.models import Employee_Profile,Employer_Profile, Document, Profile_Picture, Listing
 
 
 class CreateProfileFromEE(forms.ModelForm):
@@ -37,6 +37,11 @@ class CreateProfileFromER(forms.ModelForm):
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
+        fields = ('description', 'document', )
+
+class ListingForm(forms.ModelForm):
+    class Meta:
+        model = Listing
         fields = ('description', 'document', )
 
 

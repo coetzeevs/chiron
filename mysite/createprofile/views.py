@@ -7,7 +7,7 @@ from django.views import generic
 from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
-from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm
+from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm, ListingForm
 from .models import Employee_Profile, Employer_Profile , Document, Profile_Picture
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
@@ -26,41 +26,7 @@ def index(request):
 		form = CreateProfileFromEE()
 	return render(request, 'createprofile/index.html', {'form': form})
 
-@login_required
-def emplyer_create_profile(request):
 
-	if request.method == 'POST':
-		form = CreateProfileFromER(request.POST)
-		if form.is_valid():
-			name = form.save(commit=False)
-			name.user = request.user
-			name.save()
-			return render(request, 'createprofile/employee_home.html')
-	else:
-		form = CreateProfileFromER()
-	return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
-
-
-@login_required
-def emplyer_edit_profile(request):
-    if request.method== 'POST':
-        try:
-            u = Employer_Profile.objects.get(user=request.user)
-            form = CreateProfileFromER(request.POST, instance=u)
-        except ObjectDoesNotExist:
-            form = CreateProfileFromER(request.POST, request.FILES)
-        if form.is_valid():  #is_valid is function not property
-            profile = form.save(commit=False)
-            profile.user = request.user
-            profile.save()
-            return render(request, 'createprofile/employee_home.html')
-    else:
-        try:
-            u = Employer_Profile.objects.get(user=request.user)
-            form = CreateProfileFromER(initial = request.POST, instance=u) #No request.POST
-        except ObjectDoesNotExist:
-            form = CreateProfileFromER(request.FILES)
-    return render(request, 'createprofile/emplyer_edit_profile.html', {'form': form})
 
 @login_required
 def emplyee_edit_profile(request):
@@ -86,6 +52,8 @@ def emplyee_edit_profile(request):
 @login_required
 def employee_home(request):
     return render(request, 'createprofile/employee_home.html')
+
+
 
 @login_required
 def employee_view_profile(request):
@@ -127,6 +95,57 @@ def photo_form_upload(request):
     return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
 
+@login_required
+def emplyer_create_profile(request):
+
+    if request.method == 'POST':
+        form = CreateProfileFromER(request.POST)
+        if form.is_valid():
+            name = form.save(commit=False)
+            name.user = request.user
+            name.save()
+            return render(request, 'createprofile/employer_home.html')
+    else:
+        form = CreateProfileFromER()
+    return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
 
 
+@login_required
+def emplyer_edit_profile(request):
+    if request.method== 'POST':
+        try:
+            u = Employer_Profile.objects.get(user=request.user)
+            form = CreateProfileFromER(request.POST, instance=u)
+        except ObjectDoesNotExist:
+            form = CreateProfileFromER(request.POST, request.FILES)
+        if form.is_valid():  #is_valid is function not property
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
+            return render(request, 'createprofile/employer_home.html')
+    else:
+        try:
+            u = Employer_Profile.objects.get(user=request.user)
+            form = CreateProfileFromER(initial = request.POST, instance=u) #No request.POST
+        except ObjectDoesNotExist:
+            form = CreateProfileFromER(request.FILES)
+    return render(request, 'createprofile/emplyer_edit_profile.html', {'form': form})
 
+@login_required
+def employer_home(request):
+    return render(request, 'createprofile/employer_home.html')
+
+
+@login_required
+def listing_form_upload(request):
+    if request.method == 'POST':
+        form = ListingForm(request.POST, request.FILES)
+        if form.is_valid():
+            name = form.save(commit=False)
+            name.user = request.user
+            name.save()
+            return render(request, 'createprofile/employer_home.html')
+    else:
+        form = ListingForm()
+        print("fuck you")
+    return render(request, 'createprofile/listing_form_upload.html', {'form': form})
