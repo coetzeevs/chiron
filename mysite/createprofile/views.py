@@ -94,13 +94,13 @@ def model_form_upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
-            return redirect('home')
+            name = form.save(commit=False)
+            name.user = request.user
+            name.save()
+            return HttpResponse("Made it")
     else:
         form = DocumentForm()
-    return render(request, 'createprofile/model_form_upload.html', {
-        'form': form
-    })
+    return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
 
 
