@@ -1,0 +1,26 @@
+<p>Hi {{u_stats.user}} you are now viewing your profile </p>
+<p>Want to go back to your home page?</p>
+
+<a href="{% url 'createprofile:employer_home' %}">Take me home</a>
+
+	
+
+
+<div>
+<img src="{{ image.photo.url }}" alt = "poes" width = "300" height="200">
+</div>
+
+
+<table style="width:100%">
+{% for name, value in u_stats.get_fields %}
+	<tr>
+    	<td>{{ name }}</td>
+    	<td>{{ value }}</td>
+    </tr>
+{% endfor %}
+</table>
+
+{% for doc in doc_stats %}
+<p> Listing Dates </p>
+<p> {{doc.uploaded_at}}</p>
+{% endfor %}

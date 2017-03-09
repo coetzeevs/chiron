@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'^employer/$', views.emplyer_create_profile, name='emplyer_create_profile'),
     url(r'^employer/edit/$', views.emplyer_edit_profile, name='emplyer_edit_profile'),
     url(r'^employer/home/$', views.employer_home, name='employer_home'),
-    url(r'^employee/uploadlisting/$', views.listing_form_upload, name='listing_form_upload'),
+    url(r'^employer/uploadlisting/$', views.listing_form_upload, name='listing_form_upload'),
+    url(r'^employer/uploadlogo/$', views.employer_photo_form_upload, name='employer_photo_form_upload'),
+    url(r'^employer/view_profile/$', views.employer_view_profile, name='employer_view_profile'),
 
     url(r'^employee/$', views.index, name='index'),
     url(r'^employee/edit/$', views.emplyee_edit_profile, name='emplyee_edit_profile'),

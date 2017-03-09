@@ -32,6 +32,9 @@ class Employer_Profile(models.Model):
     bio =  models.TextField(max_length=500, blank=True)
     url =  models.TextField(max_length=50, blank=True)
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Employer_Profile._meta.fields]
+
 class Document(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=255, blank=True)
@@ -40,6 +43,12 @@ class Document(models.Model):
     
 
 class Profile_Picture(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    description = models.CharField(max_length=255, blank=True)
+    photo = models.ImageField(upload_to="documents/photos/")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+
+class Logo(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=255, blank=True)
     photo = models.ImageField(upload_to="documents/photos/")

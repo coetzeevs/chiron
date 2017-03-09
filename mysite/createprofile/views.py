@@ -7,8 +7,8 @@ from django.views import generic
 from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
-from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm, ListingForm
-from .models import Employee_Profile, Employer_Profile , Document, Profile_Picture
+from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm, ListingForm, LogoForm
+from .models import Employee_Profile, Employer_Profile , Document, Profile_Picture, Logo,Listing
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
@@ -149,3 +149,28 @@ def listing_form_upload(request):
         form = ListingForm()
         print("fuck you")
     return render(request, 'createprofile/listing_form_upload.html', {'form': form})
+
+@login_required
+def employer_photo_form_upload(request):
+    if request.method == 'POST':
+        form = LogoForm(request.POST, request.FILES)
+        if form.is_valid():
+            name = form.save(commit=False)
+            name.user = request.user
+            name.save()
+            return render(request, 'createprofile/employer_home.html')
+    else:
+        form = ProfilePictureForm()
+        print("fuck you")
+    return render(request, 'createprofile/model_form_upload.html', {'form': form})
+
+@login_required
+def employer_view_profile(request):
+    u_stats = Employer_Profile.objects.get(user=request.user)
+    print(u_stats.company)
+    print(u_stats.user)
+    print(1)
+    doc_stats = Listing.objects.filter(user=request.user)
+    print(2)
+    image = Logo.objects.get(user=request.user)
+    return render(request, 'createprofile/employer_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
