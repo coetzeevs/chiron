@@ -100,6 +100,7 @@ def model_form_upload(request):
             return HttpResponse("Made it")
     else:
         form = DocumentForm()
+        print("fuck you")
     return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
 
