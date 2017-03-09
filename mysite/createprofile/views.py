@@ -20,7 +20,7 @@ def index(request):
 			name = form.save(commit=False)
 			name.user = request.user
 			name.save()
-			return HttpResponse("Made it")
+			return render(request, 'createprofile/employee_home.html')
 	else:
 		form = CreateProfileFromEE()
 	return render(request, 'createprofile/index.html', {'form': form})
@@ -33,7 +33,7 @@ def emplyer_create_profile(request):
 			name = form.save(commit=False)
 			name.user = request.user
 			name.save()
-			return HttpResponse("Made it")
+			return render(request, 'createprofile/employee_home.html')
 	else:
 		form = CreateProfileFromER()
 	return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
@@ -51,7 +51,7 @@ def emplyer_edit_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            return HttpResponse("Made it")
+            return render(request, 'createprofile/employee_home.html')
     else:
         try:
             u = Employer_Profile.objects.get(user=request.user)
@@ -71,7 +71,7 @@ def emplyee_edit_profile(request):
             profile = form.save(commit=False)
             profile.user = request.user
             profile.save()
-            return HttpResponse("Made it")
+            return render(request, 'createprofile/employee_home.html')
     else:
         try:
             u = Employee_Profile.objects.get(user=request.user)
@@ -100,7 +100,7 @@ def model_form_upload(request):
             name = form.save(commit=False)
             name.user = request.user
             name.save()
-            return HttpResponse("Made it")
+            return render(request, 'createprofile/employee_home.html')
     else:
         form = DocumentForm()
         print("fuck you")
@@ -113,7 +113,7 @@ def photo_form_upload(request):
             name = form.save(commit=False)
             name.user = request.user
             name.save()
-            return HttpResponse("Made it")
+            return render(request, 'createprofile/employee_home.html')
     else:
         form = ProfilePictureForm()
         print("fuck you")

@@ -9,13 +9,17 @@
   </header>
 <p> You are now on the employee home page</p>
 <p>How about starting to create your profile?</p>
- <a href="{% url 'createprofile:employee_view_profile' %}">view profile</a>
- <p>Already Done?</p>
- <p>How about editing your profile?</p>
- <a href="{% url 'createprofile:emplyee_edit_profile' %}">edit profile</a>
+<a href="{% url 'createprofile:index' %}">Create profile</a>
 
  <p>Want to Upload your cv?</p>
 <a href="{% url 'createprofile:model_form_upload' %}">Upload CV</a>
 
  <p>Or your profile pic??</p>
 <a href="{% url 'createprofile:photo_form_upload' %}">Upload PP</a>
+
+<p>How about Viewing your profile?</p>
+ <a href="{% url 'createprofile:employee_view_profile' %}">view profile</a>
+ <p>Already Done?</p>
+ <p>How about editing your profile?</p>
+ <a href="{% url 'createprofile:emplyee_edit_profile' %}">edit profile</a>
+
