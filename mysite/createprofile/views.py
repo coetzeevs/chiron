@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404,redirect, reverse, render_to_response
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, RequestContext
@@ -11,7 +12,7 @@ from .models import Employee_Profile, Employer_Profile , Document, Profile_Pictu
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
 
-
+@login_required
 def index(request):
 
 	if request.method == 'POST':
@@ -25,6 +26,7 @@ def index(request):
 		form = CreateProfileFromEE()
 	return render(request, 'createprofile/index.html', {'form': form})
 
+@login_required
 def emplyer_create_profile(request):
 
 	if request.method == 'POST':
@@ -39,7 +41,7 @@ def emplyer_create_profile(request):
 	return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
 
 
-
+@login_required
 def emplyer_edit_profile(request):
     if request.method== 'POST':
         try:
@@ -60,6 +62,7 @@ def emplyer_edit_profile(request):
             form = CreateProfileFromER(request.FILES)
     return render(request, 'createprofile/emplyer_edit_profile.html', {'form': form})
 
+@login_required
 def emplyee_edit_profile(request):
     if request.method== 'POST':
         try:
@@ -80,9 +83,11 @@ def emplyee_edit_profile(request):
             form = CreateProfileFromEE(request.FILES)
     return render(request, 'createprofile/employee_edit_profile.html', {'form': form})
 
+@login_required
 def employee_home(request):
     return render(request, 'createprofile/employee_home.html')
 
+@login_required
 def employee_view_profile(request):
     u = Employee_Profile.objects.get(user=request.user)
     print(u.user)
@@ -93,6 +98,7 @@ def employee_view_profile(request):
     print(image.photo.url)
     return render(request, 'createprofile/employee_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
 
+@login_required
 def model_form_upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
@@ -106,6 +112,7 @@ def model_form_upload(request):
         print("fuck you")
     return render(request, 'createprofile/model_form_upload.html', {'form': form})
 
+@login_required
 def photo_form_upload(request):
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
