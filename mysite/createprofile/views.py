@@ -100,7 +100,9 @@ def photo_form_upload(request):
 
 @login_required
 def emplyer_create_profile(request):
-
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     if request.method == 'POST':
         form = CreateProfileFromER(request.POST)
         if form.is_valid():
@@ -115,6 +117,9 @@ def emplyer_create_profile(request):
 
 @login_required
 def emplyer_edit_profile(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     if request.method== 'POST':
         try:
             u = Employer_Profile.objects.get(user=request.user)
@@ -144,6 +149,9 @@ def employer_home(request):
 
 @login_required
 def listing_form_upload(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     if request.method == 'POST':
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
@@ -158,6 +166,9 @@ def listing_form_upload(request):
 
 @login_required
 def employer_photo_form_upload(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     if request.method == 'POST':
         form = LogoForm(request.POST, request.FILES)
         if form.is_valid():
@@ -172,6 +183,9 @@ def employer_photo_form_upload(request):
 
 @login_required
 def employer_view_profile(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     u_stats = Employer_Profile.objects.get(user=request.user)
     print(u_stats.company)
     print(u_stats.user)
