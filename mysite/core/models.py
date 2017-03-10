@@ -14,6 +14,8 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
     employer = models.BooleanField(default = False)
 
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in Profile._meta.fields]
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

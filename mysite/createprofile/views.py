@@ -8,6 +8,7 @@ from django.utils import timezone
 from django.core.mail import EmailMessage
 from django.conf import settings
 from createprofile.forms import CreateProfileFromEE, CreateProfileFromER, DocumentForm, ProfilePictureForm, ListingForm, LogoForm
+from core.models import Profile
 from .models import Employee_Profile, Employer_Profile , Document, Profile_Picture, Logo,Listing
 from django.core.files.storage import FileSystemStorage
 # Create your views here.
@@ -51,6 +52,8 @@ def emplyee_edit_profile(request):
 
 @login_required
 def employee_home(request):
+    user = Profile.objects.get(user=request.user)
+    print(user.employer)
     return render(request, 'createprofile/employee_home.html')
 
 
@@ -133,6 +136,9 @@ def emplyer_edit_profile(request):
 
 @login_required
 def employer_home(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == False):
+        return HttpResponseRedirect('/createprofile/employee/home/')
     return render(request, 'createprofile/employer_home.html')
 
 
