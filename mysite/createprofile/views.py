@@ -15,22 +15,27 @@ from django.core.files.storage import FileSystemStorage
 
 @login_required
 def index(request):
-
-	if request.method == 'POST':
-		form = CreateProfileFromEE(request.POST)
-		if form.is_valid():
-			name = form.save(commit=False)
-			name.user = request.user
-			name.save()
-			return render(request, 'createprofile/employee_home.html')
-	else:
-		form = CreateProfileFromEE()
-	return render(request, 'createprofile/index.html', {'form': form})
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
+    if request.method == 'POST':
+    	form = CreateProfileFromEE(request.POST)
+    	if form.is_valid():
+    		name = form.save(commit=False)
+    		name.user = request.user
+    		name.save()
+    		return render(request, 'createprofile/employee_home.html')
+    else:
+    	form = CreateProfileFromEE()
+    return render(request, 'createprofile/index.html', {'form': form})
 
 
 
 @login_required
 def emplyee_edit_profile(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
     if request.method== 'POST':
         try:
             u = Employee_Profile.objects.get(user=request.user)
@@ -53,6 +58,8 @@ def emplyee_edit_profile(request):
 @login_required
 def employee_home(request):
     user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
     print(user.employer)
     return render(request, 'createprofile/employee_home.html')
 
@@ -60,6 +67,9 @@ def employee_home(request):
 
 @login_required
 def employee_view_profile(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
     u = Employee_Profile.objects.get(user=request.user)
     print(u.user)
     print(u.current_company)
@@ -71,6 +81,9 @@ def employee_view_profile(request):
 
 @login_required
 def model_form_upload(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
@@ -85,6 +98,9 @@ def model_form_upload(request):
 
 @login_required
 def photo_form_upload(request):
+    user = Profile.objects.get(user=request.user)
+    if(user.employer == True):
+        return HttpResponseRedirect('/createprofile/employer/home/')
     if request.method == 'POST':
         form = ProfilePictureForm(request.POST, request.FILES)
         if form.is_valid():
