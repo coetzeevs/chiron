@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
 
+
 from core.forms import SignUpForm,CreateProfileForm
 from core.tokens import account_activation_token
 
@@ -74,7 +75,21 @@ def activate(request, uidb64, token):
         user.profile.email_confirmed = True
         user.save()
         login(request, user)
-        return render(request, 'createprofile/employee_home.html')
+        form = CreateProfileForm()
+        return render(request, 'core/employer_employee.html', {'form': form})
+    if request.method == 'POST':
+        form = CreateProfileForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data['employer']
+            user = request.user
+            if(data == True):
+                user.profile.employer = True
+                user.save()
+            else:
+                user.profile.employer = False
+                user.save()
+            return HttpResponseRedirect('/createprofile/employer/home/')
+
     else:
         return render(request, 'core/account_activation_invalid.html')
 
