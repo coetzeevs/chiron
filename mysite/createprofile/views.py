@@ -16,19 +16,25 @@ from django.core.files.storage import FileSystemStorage
 @login_required
 def index(request):
     user = Profile.objects.get(user=request.user)
+    user_check = Employee_Profile.objects.filter(user=request.user).exists()
+    print(user_check)
     if(user.employer == True):
+        print("not an employee")
         return HttpResponseRedirect('/createprofile/employer/home/')
-    if request.method == 'POST':
-    	form = CreateProfileFromEE(request.POST)
-    	if form.is_valid():
-    		name = form.save(commit=False)
-    		name.user = request.user
-    		name.save()
-    		return render(request, 'createprofile/employee_home.html')
+    if(user_check == True):
+        return render(request, 'createprofile/employee_home.html')
     else:
-    	form = CreateProfileFromEE()
+        if request.method == 'POST':
+            form = CreateProfileFromEE(request.POST)
+            if form.is_valid():
+                name = form.save(commit=False)
+                name.user = request.user
+                name.save()
+                return render(request, 'createprofile/employee_home.html')
+        else:
+            form = CreateProfileFromEE()
     return render(request, 'createprofile/index.html', {'form': form})
-
+    
 
 
 @login_required
@@ -116,19 +122,24 @@ def photo_form_upload(request):
 
 @login_required
 def emplyer_create_profile(request):
-    user = Profile.objects.get(user=request.user)
-    if(user.employer == False):
-        return HttpResponseRedirect('/createprofile/employee/home/')
-    if request.method == 'POST':
-        form = CreateProfileFromER(request.POST)
-        if form.is_valid():
-            name = form.save(commit=False)
-            name.user = request.user
-            name.save()
-            return render(request, 'createprofile/employer_home.html')
-    else:
-        form = CreateProfileFromER()
-    return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
+        user = Profile.objects.get(user=request.user)
+        user_check = Employer_Profile.objects.filter(user=request.user).exists()
+        print(user_check)
+        if(user.employer == False):
+            return HttpResponseRedirect('/createprofile/employee/home/')
+        if(user_check == True):
+            return HttpResponse("Hello, world. You're at the polls index.")
+        else:
+            if request.method == 'POST':
+                form = CreateProfileFromER(request.POST)
+                if form.is_valid():
+                    name = form.save(commit=False)
+                    name.user = request.user
+                    name.save()
+                    return render(request, 'createprofile/employer_home.html')
+            else:
+                form = CreateProfileFromER()
+            return render(request, 'createprofile/emplyer_create_profile.html', {'form': form})
 
 
 @login_required
