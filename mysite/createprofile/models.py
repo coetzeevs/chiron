@@ -49,7 +49,7 @@ class Profile_Picture(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
 class Logo(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=255, blank=True)
     photo = models.ImageField(upload_to="documents/photos/")
     uploaded_at = models.DateTimeField(auto_now_add=True)

@@ -219,5 +219,5 @@ def employer_view_profile(request):
     print(1)
     doc_stats = Listing.objects.filter(user=request.user)
     print(2)
-    image = Logo.objects.get(user=request.user)
+    image = Logo.objects.filter(user=request.user).order_by('-uploaded_at')[:1]
     return render(request, 'createprofile/employer_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
