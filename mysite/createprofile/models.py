@@ -36,7 +36,7 @@ class Employer_Profile(models.Model):
         return [(field.name, field.value_to_string(self)) for field in Employer_Profile._meta.fields]
 
 class Document(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.CharField(max_length=255, blank=True)
     document = models.FileField(upload_to="documents/", validators=[validate_cv_extension])
     uploaded_at = models.DateTimeField(auto_now_add=True)

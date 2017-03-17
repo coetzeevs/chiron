@@ -19,5 +19,7 @@
 {% endfor %}
 </table>
 
-<p> Last time you uploaded your cv was at: </p>
-<p> {{doc_stats.uploaded_at}}</p>
+{% for doc in doc_stats %}
+<p> CV Dates </p>
+<p> {{doc.uploaded_at}}</p>
+{% endfor %}

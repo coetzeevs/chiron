@@ -77,13 +77,12 @@ def employee_view_profile(request):
     if(user.employer == True):
         return HttpResponseRedirect('/createprofile/employer/home/')
     u = Employee_Profile.objects.get(user=request.user)
-    print(u.user)
-    print(u.current_company)
     u_stats = Employee_Profile.objects.get(user=request.user)
-    doc_stats = Document.objects.get(user=request.user)
+    doc_stats = Document.objects.filter(user=request.user).order_by('-uploaded_at')[:1]
+    print(doc_stats)
     image = Profile_Picture.objects.get(user=request.user)
-    print(image.photo.url)
     return render(request, 'createprofile/employee_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
+
 
 @login_required
 def model_form_upload(request):
