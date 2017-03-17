@@ -79,8 +79,9 @@ def employee_view_profile(request):
     u = Employee_Profile.objects.get(user=request.user)
     u_stats = Employee_Profile.objects.get(user=request.user)
     doc_stats = Document.objects.filter(user=request.user).order_by('-uploaded_at')[:1]
-    print(doc_stats)
-    image = Profile_Picture.objects.get(user=request.user)
+    
+    image = Profile_Picture.objects.filter(user=request.user).order_by('-uploaded_at')[:1]
+    print(image)
     return render(request, 'createprofile/employee_view_profile.html', {'image': image ,'u_stats': u_stats, 'doc_stats' : doc_stats})
 
 
