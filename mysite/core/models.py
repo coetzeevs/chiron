@@ -22,3 +22,15 @@ def update_user_profile(sender, instance, created, **kwargs):
     if created:
         Profile.objects.create(user=instance)
     instance.profile.save()
+
+class ContactUs(models.Model):
+    surname = models.TextField(max_length=30, blank=False)
+    email = models.EmailField(max_length=254, blank=False)
+    subject = models.TextField(max_length=1000, blank=False)
+    email_body = models.TextField(max_length=2000, blank=False)
+    phone_number = models.IntegerField(blank=True)
+    current_occupation = models.TextField(max_length=500, blank=True)
+    location = models.TextField(max_length=500, blank=True)
+
+    def get_fields(self):
+        return [(field.name, field.value_to_string(self)) for field in ContactUs._meta.fields]

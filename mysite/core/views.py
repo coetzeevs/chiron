@@ -10,12 +10,21 @@ from django.template.loader import render_to_string
 from django.http import HttpResponse, HttpResponseRedirect
 
 
-from core.forms import SignUpForm,CreateProfileForm
+from core.forms import SignUpForm,CreateProfileForm,ContactUsForm
 from core.tokens import account_activation_token
 
-@login_required
+
 def home(request):
-    return render(request, 'home.html')
+    if request.method == 'POST':
+        form = ContactUsForm(request.POST)
+        if form.is_valid():
+            profile = form.save(commit=False)
+            profile.save()
+            return render(request, 'home.html', {'form': form})
+    else:
+        form = ContactUsForm()
+    return render(request, 'home.html', {'form': form})
+
 
 
 def signup(request):
