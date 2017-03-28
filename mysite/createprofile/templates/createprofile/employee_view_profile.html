@@ -2,13 +2,19 @@
 <p>Want to go back to your home page?</p>
 <a href="{% url 'createprofile:employee_home' %}">Take me home</a>
 
-	
 
+{% load static %}
+{% if image %}
 {%for im in image %}
 <div>
 <img src="{{ im.photo.url }}" alt = "poes" width = "300" height="200">
 </div>
 {% endfor %}
+{% else %}
+<div>
+<img src="{% static 'createprofile/images/default_images/default_profile_pic.jpg' %}" alt = "poes" width = "300" height="200">
+</div>
+{% endif %}
 
 <table style="width:100%">
 {% for name, value in u_stats.get_fields %}
